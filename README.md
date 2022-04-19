@@ -7,6 +7,8 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 ## PRELIMINARY Schedule
 
+<br/>
+
 **Day 1: Mon (29th Aug 2022)**
 
 09:00 - 09:30	Course Introduction				                               Paulo (?)
@@ -17,7 +19,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 11:00 - 12:00	Lecture: Introduction to Image informatics	        Christophe (?)
 
-              (bioFormats,image data,intro to TissUUmaps)
+(bioFormats,image data,intro to TissUUmaps)
 
 12:00 - 13:00	*Lunch*
 
@@ -25,7 +27,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 14:00 - 15:00	Lecture: Image pre-processing			                 Christoffer (?)
 
-		          (ashlar)
+(ashlar)
 
 15:00 - 15:30	*Coffee Break*
 
@@ -33,7 +35,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 16:30 - 17:00	Day1 Summary
 
-
+<br/>
 
 **Day 2: Tue (30th Aug 2022)**
 
@@ -41,7 +43,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 09:30 - 10:30 Lecture: Segmentation-based and 		                    Naveed (?)
 
-		          segmentation-free cell identification                Sebastian (?)
+segmentation-free cell identification                Sebastian (?)
 
 10:30 - 12:00	*Coffee Break*
 
@@ -59,6 +61,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 
 16:30 - 17:00	Day2 summary
 
+<br/>
 
 
 **Day 3: Wed (1st Sep 2022)**
@@ -86,7 +89,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 16:30 - 17:00	Day3 summary
 
 
-
+<br/>
 
 **Day 4: Thu (2nd Sep 2022)**
 
@@ -101,13 +104,14 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 13:00 - 14:00 Lab: Free exercises
 
 14:00 - 15:00 Lecture: Spatial data projection                          Alma (?)                                         
+
 15:00 - 15:30	*Coffee Break*
 
 15:30 - 16:30 Lab: 10_ST_Eggplant
 
 16:30 - 17:00	Day4 summary
 
-
+<br/>
 
 
 **Day 5: Fri (3rd Sep 2022)**
@@ -123,7 +127,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 12:00 - 13:00	Course Summary
 
 
-
+<br/>
 
 
 ## ENTRY REQUIREMENTS:
@@ -134,7 +138,7 @@ This repository contains materials and lectures for the joint NBIS and BIIF spat
 ##
 
 
-
+<br/>
 
 
 ## STAFF:
