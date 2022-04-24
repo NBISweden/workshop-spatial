@@ -12,5 +12,5 @@ TissUUmaps==3.0.8.3
 torch==1.11.0
 tqdm==4.64.0
 umap_learn==0.5.2
-tensorflow==1.14.0
+tensorflow==2.5.3
 flowdec==1.1.0
