@@ -159,6 +159,7 @@ segmentation-free cell identification                Sebastian (?)
 - Åsa Björklund
 - Sebastian Tiesmeyer
 - Ludvig Bergenstråle
+- Eduard Chelebian
 
 **Contributing Institutions:**
 - Helmholtz-Munich, DE
