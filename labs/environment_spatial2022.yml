@@ -1,16 +1,11 @@
-## conda requirements for all packages needed to run the scanpy tutorials
-# install with:  mamba env create -n spatial2022 -f environment_spatial2022.yml
-# then run: source activate spatial2022
 name: spatial2022
 
 channels:
-### MAIN CONDA CHANNELS ###
  - conda-forge
  - anaconda
  - bioconda
  - defaults
  - r
-### ADDITIONAL CONDA CHANNELS ###
  - rdonnelly
  - psi4
  - r_test
@@ -23,7 +18,6 @@ channels:
  - ohsu-comp-bio
 
 dependencies:
-### PYTHON LIBRARIES ###
  - compilers
  - notebook
  - jupyter_contrib_nbextensions
@@ -49,7 +43,10 @@ dependencies:
  - pybiomart
  - squidpy
  - morphops
+ - napari
  - pip
  - pip:
    - gsea-api
-
+   - tissuumaps[full]
+   - eggplant
+   - git+https://github.com/ludvb/xfuse@master
