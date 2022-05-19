@@ -1,6 +1,8 @@
 # Byte-compiled / optimized / DLL files
 # data/
-
+**/data
+**/results
+.DStore
 
 __pycache__/
 *.py[cod]
