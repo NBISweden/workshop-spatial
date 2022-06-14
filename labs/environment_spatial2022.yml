@@ -18,6 +18,7 @@ channels:
  - ohsu-comp-bio
 
 dependencies:
+ - python=3.9
  - compilers
  - notebook
  - jupyter_contrib_nbextensions
