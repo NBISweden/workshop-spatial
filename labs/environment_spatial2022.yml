@@ -45,9 +45,13 @@ dependencies:
  - squidpy
  - morphops
  - napari
+ - scikit-image=0.15.0
+ - starfish
+ - libvips
  - pip
  - pip:
    - gsea-api
    - tissuumaps[full]
    - eggplant
    - git+https://github.com/ludvb/xfuse@master
+   - psfmodels
