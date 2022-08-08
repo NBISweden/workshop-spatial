@@ -19,6 +19,7 @@ channels:
 
 dependencies:
  - python=3.9
+ - tree
  - compilers
  - notebook
  - jupyter_contrib_nbextensions
@@ -29,9 +30,11 @@ dependencies:
  - multicore-tsne
  - requests
  - python-annoy
+ - scvi-tools
  - mnnpy
  - scanpy
  - scanorama
+ - numpy=1.21.6
  - numba
  - llvmlite
  - python-igraph
@@ -45,9 +48,10 @@ dependencies:
  - squidpy
  - morphops
  - napari
- - scikit-image=0.15.0
+# - scikit-image=0.15.0
  - starfish
  - libvips
+ - libpq
  - pip
  - pip:
    - gsea-api
