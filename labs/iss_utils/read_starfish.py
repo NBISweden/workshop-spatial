@@ -95,7 +95,7 @@ def create_coordinates(primary_dir,
         z_pos = fov_coordinates[f][2]
         fov_info = fovs_primary[fov]
         for i in range(len(fov_info)):
-            primary_df = primary_df.append({
+            primary_df = pd.concat([primary_df, pd.DataFrame.from_records([{
                 'fov': fov_names[fov],
                 'round': fov_info[i][0],
                 'ch': fov_info[i][1],
@@ -106,7 +106,7 @@ def create_coordinates(primary_dir,
                 'yc_max': y_pos + xy_max,
                 'zc_min': z_pos,
                 'zc_max': z_pos + z_max
-            }, ignore_index=True)
+            }])], ignore_index=True)
 
     primary_df = primary_df.astype(convert_dict)
     primary_df.to_csv(os.path.join(primary_dir, 'coordinates.csv'), index=None)
@@ -120,7 +120,7 @@ def create_coordinates(primary_dir,
         z_pos = fov_coordinates[f][2]
         fov_info = fovs_nuclei[fov]
         for i in range(len(fov_info)):
-            nuclei_df = nuclei_df.append({
+            nuclei_df = pd.concat([nuclei_df, pd.DataFrame.from_records([{
                 'fov': fov_names[fov],
                 'round': fov_info[i][0],
                 'ch': fov_info[i][1],
@@ -131,7 +131,7 @@ def create_coordinates(primary_dir,
                 'yc_max': y_pos + xy_max,
                 'zc_min': z_pos,
                 'zc_max': z_pos + z_max
-            }, ignore_index=True)
+            }])], ignore_index=True)
 
 
     nuclei_df = nuclei_df.astype(convert_dict)
