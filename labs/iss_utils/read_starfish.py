@@ -1,4 +1,4 @@
-import os
+import os, errno
 import pandas as pd
 
 from slicedimage import ImageFormat
@@ -7,7 +7,14 @@ from starfish.experiment.builder import format_structured_dataset
 
 def fstr(template, **kwargs):
     return eval(f"f'{template}'", kwargs)
-    
+
+def force_symlink(src, dst):
+    try:
+        os.symlink(src, dst)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            os.remove(dst)
+            os.symlink(src, dst)
 
 def format_data(base_dir,
                 out_dir,
@@ -33,7 +40,7 @@ def format_data(base_dir,
                 for z in range(n_zplanes):
                     src=os.path.join(base_dir, fstr(file_format, r=r, ch=ch, fov=fov, z=z))
                     dst=os.path.join(primary_dir,fstr("primary-f{fov}-r{r}-c{chi}-z{z}.tif", r=r, chi=chi, fov=fov, z=z))
-                    os.symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
+                    force_symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
 
     # nuclei
     nuclei_dir = os.path.join(out_dir, "nuclei")
@@ -46,7 +53,7 @@ def format_data(base_dir,
                 for z in range(n_zplanes):
                     src=os.path.join(base_dir, fstr(file_format, r=r, ch=ch, fov=fov, z=z))
                     dst=os.path.join(nuclei_dir,fstr("nuclei-f{fov}-r{r}-c{ch}-z{z}.tif", r=r, ch=0, fov=fov, z=z))
-                    os.symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
+                    force_symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
     
     return(primary_dir, nuclei_dir)
 
