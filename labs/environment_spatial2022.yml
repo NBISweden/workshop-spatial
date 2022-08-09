@@ -48,8 +48,8 @@ dependencies:
  - squidpy
  - morphops
  - napari
-# - scikit-image=0.15.0
  - starfish
+ - glib
  - libvips
  - libpq
  - pip
