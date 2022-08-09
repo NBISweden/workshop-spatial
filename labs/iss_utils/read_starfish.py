@@ -1,4 +1,4 @@
-import os
+import os, errno
 import pandas as pd
 
 from slicedimage import ImageFormat
@@ -7,7 +7,14 @@ from starfish.experiment.builder import format_structured_dataset
 
 def fstr(template, **kwargs):
     return eval(f"f'{template}'", kwargs)
-    
+
+def force_symlink(src, dst):
+    try:
+        os.symlink(src, dst)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            os.remove(dst)
+            os.symlink(src, dst)
 
 def format_data(base_dir,
                 out_dir,
@@ -33,7 +40,7 @@ def format_data(base_dir,
                 for z in range(n_zplanes):
                     src=os.path.join(base_dir, fstr(file_format, r=r, ch=ch, fov=fov, z=z))
                     dst=os.path.join(primary_dir,fstr("primary-f{fov}-r{r}-c{chi}-z{z}.tif", r=r, chi=chi, fov=fov, z=z))
-                    os.symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
+                    force_symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
 
     # nuclei
     nuclei_dir = os.path.join(out_dir, "nuclei")
@@ -46,7 +53,7 @@ def format_data(base_dir,
                 for z in range(n_zplanes):
                     src=os.path.join(base_dir, fstr(file_format, r=r, ch=ch, fov=fov, z=z))
                     dst=os.path.join(nuclei_dir,fstr("nuclei-f{fov}-r{r}-c{ch}-z{z}.tif", r=r, ch=0, fov=fov, z=z))
-                    os.symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
+                    force_symlink(src=os.path.abspath(src),dst=os.path.abspath(dst))
     
     return(primary_dir, nuclei_dir)
 
@@ -88,7 +95,7 @@ def create_coordinates(primary_dir,
         z_pos = fov_coordinates[f][2]
         fov_info = fovs_primary[fov]
         for i in range(len(fov_info)):
-            primary_df = primary_df.append({
+            primary_df = pd.concat([primary_df, pd.DataFrame.from_records([{
                 'fov': fov_names[fov],
                 'round': fov_info[i][0],
                 'ch': fov_info[i][1],
@@ -99,7 +106,7 @@ def create_coordinates(primary_dir,
                 'yc_max': y_pos + xy_max,
                 'zc_min': z_pos,
                 'zc_max': z_pos + z_max
-            }, ignore_index=True)
+            }])], ignore_index=True)
 
     primary_df = primary_df.astype(convert_dict)
     primary_df.to_csv(os.path.join(primary_dir, 'coordinates.csv'), index=None)
@@ -113,7 +120,7 @@ def create_coordinates(primary_dir,
         z_pos = fov_coordinates[f][2]
         fov_info = fovs_nuclei[fov]
         for i in range(len(fov_info)):
-            nuclei_df = nuclei_df.append({
+            nuclei_df = pd.concat([nuclei_df, pd.DataFrame.from_records([{
                 'fov': fov_names[fov],
                 'round': fov_info[i][0],
                 'ch': fov_info[i][1],
@@ -124,7 +131,7 @@ def create_coordinates(primary_dir,
                 'yc_max': y_pos + xy_max,
                 'zc_min': z_pos,
                 'zc_max': z_pos + z_max
-            }, ignore_index=True)
+            }])], ignore_index=True)
 
 
     nuclei_df = nuclei_df.astype(convert_dict)
