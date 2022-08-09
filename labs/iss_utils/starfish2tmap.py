@@ -44,18 +44,19 @@ def qc_csv(experiment, spot_intensities, output_path):
 
 
 
-def qc_images(filtered_imgs, exp, output_path):
+def qc_images(filtered_imgs, experiment, output_path):
 
     """
     Creates the images from a starfish experiments compatible with the TissUUmaps "Spot Insepector" plugin
 
     Parameters:
         filtered_imgs (starfish ImageStack): image stack after filtering and deconvolving the data
+        experiment (starfish Experiment): containing the the nuclei images
         output_path (string): directory where you wish to save the images
     """
 
     image_names = []
-    dapis = exp['fov_001'].get_image('nuclei')
+    dapis = experiment['fov_001'].get_image('nuclei')
     output_path = os.path.abspath(output_path)
 
     for r in range(filtered_imgs.num_rounds):
