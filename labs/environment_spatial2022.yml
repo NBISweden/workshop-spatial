@@ -54,8 +54,11 @@ dependencies:
  - libpq
  - pip
  - pip:
+   - git+https://github.com/ludvb/xfuse@master
    - gsea-api
    - tissuumaps[full]
-   - eggplant
-   - git+https://github.com/ludvb/xfuse@master
+   - spatial-eggplant
    - psfmodels
+   - planktonspace
+   - numpy==1.22.4
+   - scikit-image==0.16.2 
