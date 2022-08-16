@@ -6,9 +6,12 @@ from PIL import Image
 
 from starfish.types import Axes
 
+import matplotlib.pyplot as plt
 
 def normalize(X, q):
     X_scaled = (X - np.percentile(X,q)) / (np.percentile(X,(100-q)) - np.percentile(X,q))
+    X_scaled[X_scaled<0] = 0
+    X_scaled[X_scaled>1] = 1
     return X_scaled
 
 def qc_csv(experiment, spot_intensities, output_path):
@@ -47,36 +50,7 @@ def qc_csv(experiment, spot_intensities, output_path):
 
     return csv_path
 
-
-def copy_images(input_path, output_path, select_fov, num_rounds, num_chs):
-    """
-    Copies the images to a new folder to make them easier to open in TissUUmaps
-    Parameters:
-        input_path (string): directory where the original images were located
-        output_path (string): directory where you wish to save the images
-    """
-
-    image_names=[]
-    for r in range(num_rounds):
-            for c in range(num_chs):
-                src_primary_name = 'primary-'+select_fov+'-c{}-r{}-z0.tiff'.format(c,r)
-                src_primary_path =os.path.join(input_path, src_primary_name)
-                dst_primary_name = 'Round{}_{}.tif'.format(r,c)
-                dst_primary_path = os.path.join(output_path, dst_primary_name)
-                shutil.copy(src=os.path.abspath(src_primary_path),dst=os.path.abspath(dst_primary_path))
-                image_names.append(dst_primary_path)
-            src_nuclei_name = 'nuclei-'+select_fov+'-c0-r{}-z0.tiff'.format(r)
-            src_nuclei_path = os.path.join(input_path, src_nuclei_name)
-            dst_nuclei_name = 'Round{}_{}.tif'.format(r,'dapi')
-            dst_nuclei_path = os.path.join(output_path, dst_nuclei_name)
-            shutil.copy(src=os.path.abspath(src_nuclei_path),dst=os.path.abspath(dst_nuclei_path))
-            image_names.append(dst_nuclei_path)
-
-    return image_names
-
-
-
-def qc_images(filtered_imgs, experiment, output_path):
+def qc_images(filtered_imgs, dapi_imgs, output_path):
 
     """
     Creates the images from a starfish experiments compatible with the TissUUmaps "Spot Insepector" plugin
@@ -88,29 +62,46 @@ def qc_images(filtered_imgs, experiment, output_path):
     """
 
     image_names = []
-    dapis = experiment['fov_001'].get_image('nuclei')
     output_path = os.path.abspath(output_path)
 
     for r in range(filtered_imgs.num_rounds):
         for c in range(filtered_imgs.num_chs):
             im = np.squeeze(filtered_imgs.sel({Axes.CH: c, Axes.ROUND: r}).xarray.values)
-            im = np.log(im)
-            im = normalize(im, 10)
-            im[im<0] = 0
+            im = normalize(im, 1)
             im = np.uint8(255*im)
             im = Image.fromarray(im)
             image_name = 'Round{}_{}.tif'.format(r,c)
             image_path = os.path.join(output_path, image_name)
             im.save(image_path)
             image_names.append(image_path)
-        dapi = np.squeeze(dapis.sel({Axes.ROUND: r}).xarray.values)
-        dapi = normalize(dapi, 10)
-        dapi[dapi<0] = 0
+        dapi = np.squeeze(dapi_imgs.sel({Axes.ROUND: r}).xarray.values)
+        dapi = normalize(dapi, 1)
         dapi = np.uint8(255*dapi)
         dapi = Image.fromarray(dapi)
-        dapi_name = 'Round{}_{}.tif'.format(r,4)
+        dapi_name = 'Round{}_DAPI.tif'.format(r)
         dapi_path = os.path.join(output_path, dapi_name)
         dapi.save(dapi_path)
         image_names.append(dapi_path)
 
     return image_names
+
+def compare_images(imgs_1, imgs_2, n=1):
+    for i in range(n):
+        c, r = np.random.randint(0,imgs_1.num_chs), np.random.randint(0,imgs_1.num_rounds)
+        
+        plt.figure(figsize=(12,5))
+        plt.subplot(1,2,1)
+        im = np.squeeze(imgs_1.sel({Axes.CH: c, Axes.ROUND: r}).xarray.values)
+        plt.imshow(im[int(im.shape[0]/2-200):int(im.shape[0]/2+200),int(im.shape[1]/2-200):int(im.shape[1]/2+200)])
+        plt.title(f'Round {r} - Channel {c} - Original Image')
+        plt.axis('off')
+        plt.colorbar()
+        
+        plt.subplot(1,2,2)
+        im = np.squeeze(imgs_2.sel({Axes.CH: c, Axes.ROUND: r}).xarray.values)
+        plt.imshow(im[int(im.shape[0]/2-200):int(im.shape[0]/2+200),int(im.shape[1]/2-200):int(im.shape[1]/2+200)])
+        plt.title(f'Round {r} - Channel {c} - Filtered Image')
+        plt.axis('off')
+        plt.colorbar()
+        plt.tight_layout()
+        
