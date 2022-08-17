@@ -57,7 +57,7 @@ dependencies:
       - git+https://github.com/ludvb/xfuse@master
       - gsea-api
       - tissuumaps[full]
-      - spatial-eggplant
+      # - spatial-eggplant
       - psfmodels
       - planktonspace
       - numpy==1.22.4
