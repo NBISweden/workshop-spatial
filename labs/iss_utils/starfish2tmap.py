@@ -37,13 +37,13 @@ def qc_csv(experiment, spot_intensities, output_path):
     for name in target_names:
         idx = np.where(experiment.codebook.target.values==name)[0][0]
         rs = np.where(experiment.codebook.values[idx]>0)[0]
-        rounds_gt.append('{};{};{};{}'.format(rs[0],rs[1],rs[2],rs[3]))
+        rounds_gt.append(';'.join([str(r) for r in rs]))
         chans = []
         for r in np.unique(rs):
             ch = experiment.codebook.values[idx][r]
             chans.append(np.argwhere(ch == np.amax(ch)))
         chs = np.concatenate(chans)
-        channels_gt.append('{};{};{};{}'.format(chs[0][0],chs[1][0],chs[2][0],chs[3][0]))
+        channels_gt.append(';'.join([str(c[0]) for c in chs]))
 
     df = pd.DataFrame(np.stack([x,y,target_names,rounds_gt,channels_gt]).transpose(), columns=['x','y','target_name','rounds','channels'])
     df.to_csv(csv_path)
@@ -74,7 +74,10 @@ def qc_images(filtered_imgs, dapi_imgs, output_path):
             image_path = os.path.join(output_path, image_name)
             im.save(image_path)
             image_names.append(image_path)
-        dapi = np.squeeze(dapi_imgs.sel({Axes.ROUND: r}).xarray.values)
+        try:
+            dapi = np.squeeze(dapi_imgs.sel({Axes.ROUND: r}).xarray.values)
+        except:
+            dapi = np.squeeze(dapi_imgs.sel({Axes.ROUND: 0}).xarray.values)
         dapi = normalize(dapi, 1)
         dapi = np.uint8(255*dapi)
         dapi = Image.fromarray(dapi)
