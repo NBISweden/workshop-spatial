@@ -22,7 +22,6 @@ dependencies:
   - scanorama
   - numpy=1.21.6
   - numba
-  - llvmlite
   - python-igraph
   - umap-learn
   - louvain
@@ -35,9 +34,7 @@ dependencies:
   - morphops
   - napari
   - starfish
-  - glib
   - libvips
-  - libpq
   - pip
   - pip:
       - git+https://github.com/ludvb/xfuse@master
