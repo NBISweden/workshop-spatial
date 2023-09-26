@@ -21,7 +21,9 @@ dependencies:
   - python=3.9
   - tree
   - compilers
-  - notebook
+  # pinned due to an incompatibility with jupyter_highlight_selected_word,
+  # which is a dependency of jupyter_contrib_nbextensions
+  - notebook<7
   - jupyter_contrib_nbextensions
   - jupyter_client
   - nbconvert
