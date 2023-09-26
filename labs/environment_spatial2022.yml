@@ -26,7 +26,6 @@ dependencies:
   - jupyter_client
   - nbconvert
   - pandoc
-  - python-annoy
   - multicore-tsne
   - requests
   - python-annoy
@@ -61,4 +60,3 @@ dependencies:
       - psfmodels
       - planktonspace
       - numpy==1.22.4
-      
