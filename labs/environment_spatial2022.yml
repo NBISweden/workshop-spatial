@@ -2,20 +2,7 @@ name: spatial2022
 
 channels:
   - conda-forge
-  - anaconda
   - bioconda
-  - defaults
-  - r
-  - rdonnelly
-  - psi4
-  - r_test
-  - free
-  - fastchan
-  - ccordoba12
-  - grst
-  - Eugene_T
-  - letaylor
-  - ohsu-comp-bio
 
 dependencies:
   - python=3.9
