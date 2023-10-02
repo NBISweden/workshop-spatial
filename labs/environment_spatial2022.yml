@@ -2,20 +2,7 @@ name: spatial2022
 
 channels:
   - conda-forge
-  - anaconda
   - bioconda
-  - defaults
-  - r
-  - rdonnelly
-  - psi4
-  - r_test
-  - free
-  - fastchan
-  - ccordoba12
-  - grst
-  - Eugene_T
-  - letaylor
-  - ohsu-comp-bio
 
 dependencies:
   - python=3.9
@@ -26,7 +13,6 @@ dependencies:
   - jupyter_client
   - nbconvert
   - pandoc
-  - python-annoy
   - multicore-tsne
   - requests
   - python-annoy
@@ -36,7 +22,6 @@ dependencies:
   - scanorama
   - numpy=1.21.6
   - numba
-  - llvmlite
   - python-igraph
   - umap-learn
   - louvain
@@ -49,9 +34,7 @@ dependencies:
   - morphops
   - napari
   - starfish
-  - glib
   - libvips
-  - libpq
   - pip
   - pip:
       - git+https://github.com/ludvb/xfuse@master
@@ -61,4 +44,3 @@ dependencies:
       - psfmodels
       - planktonspace
       - numpy==1.22.4
-      
